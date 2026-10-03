@@ -33,6 +33,22 @@
                 transform(product);
             }
         }
+        static List<Product> FilterProducts(
+       List<Product> products,
+       Predicate<Product> condition)
+        {
+            List<Product> result = new List<Product>();
+
+            foreach (Product product in products)
+            {
+                if (condition(product))
+                {
+                    result.Add(product);
+                }
+            }
+
+            return result;
+        }
         static void Main(string[] args)
         {
             List<Product> catalog = new()
@@ -129,7 +145,7 @@
             #endregion
 
             #region task03-3.2
-            
+            /*
             Console.WriteLine("--- Summary List ---");
             TransformProducts(catalog, p =>
             {
@@ -151,9 +167,22 @@
                 Console.WriteLine(p.Name);
                 return p;
             });
-            
+            */
             #endregion
+            #region task03-3.3
 
+            Console.WriteLine("--- Low Stock Alerts ---");
+
+            List<Product> lowStockProducts = FilterProducts(
+    catalog,
+    product => product.Stock < 20
+);
+
+            foreach (Product product in lowStockProducts)
+            {
+                Console.WriteLine($"[LOW STOCK] {product.Name}: only {product.Stock} left!");
+            }
+            #endregion
         }
     }
 }
