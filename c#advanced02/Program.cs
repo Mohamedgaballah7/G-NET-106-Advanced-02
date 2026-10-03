@@ -18,6 +18,13 @@
 
             return result;
         }
+        static void PrintReport(List<Product> products, Action<Product> action)
+        {
+            foreach (Product product in products)
+            {
+                action(product);
+            }
+        }
         static void Main(string[] args)
         {
             List<Product> catalog = new()
@@ -54,7 +61,7 @@
                 p => p.Category == "Clothing" && p.Price < 100
             );
 
-
+            /*
             Console.WriteLine("--- Electronics ---");
 
             foreach (Product product in electronics)
@@ -90,7 +97,28 @@
                     $"{product.Name} - ${product.Price} (Stock: {product.Stock})"
                 );
             }
+            */
             #endregion
-            }
+
+            #region task03-3.1
+
+            Console.WriteLine("--- Short Report ---");
+
+            PrintReport(catalog, p =>
+            {
+                Console.WriteLine($"{p.Name} - ${p.Price}");
+            });
+
+            Console.WriteLine("\n--- Detailed Report ---");
+
+            PrintReport(catalog, p =>
+            {
+                Console.WriteLine(
+                    $"[{p.Category}] {p.Name} | Price: ${p.Price} | Stock: {p.Stock}"
+                );
+            });
+            #endregion
+
+        }
     }
 }
