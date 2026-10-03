@@ -25,6 +25,14 @@
                 action(product);
             }
         }
+
+        static void TransformProducts(List<Product> products, Func<Product, Product> transform)
+        {
+            foreach (Product product in products)
+            {
+                transform(product);
+            }
+        }
         static void Main(string[] args)
         {
             List<Product> catalog = new()
@@ -101,7 +109,7 @@
             #endregion
 
             #region task03-3.1
-
+            /*
             Console.WriteLine("--- Short Report ---");
 
             PrintReport(catalog, p =>
@@ -117,6 +125,33 @@
                     $"[{p.Category}] {p.Name} | Price: ${p.Price} | Stock: {p.Stock}"
                 );
             });
+            */
+            #endregion
+
+            #region task03-3.2
+            
+            Console.WriteLine("--- Summary List ---");
+            TransformProducts(catalog, p =>
+            {
+                Console.WriteLine($"{p.Name} ( ${p.Price})");
+                return p;
+            });
+            Console.WriteLine("\n--- Price labels ---");
+            TransformProducts(catalog, delegate(Product p)
+            {
+                if(p.Price > 100)
+                {
+                    p.Name = $"{p.Name} : Expensive!";
+                }
+               
+                else
+                {
+                    p.Name = $"{p.Name} : Affordable";
+                }
+                Console.WriteLine(p.Name);
+                return p;
+            });
+            
             #endregion
 
         }
